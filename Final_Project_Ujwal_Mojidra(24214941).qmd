@@ -561,27 +561,30 @@ greenline_ts <- ts(greenline_data$VALUE, start = c(2018, 1), frequency = 12)
 ## Fit & plot `TBATS` model for Green Line LUAS.
 
 ```{r fig.width= 10, fig.height=4}
+# Set options to avoid scientific notation
 options(scipen = 101)
-# Fit TBATS model
+
+# Fit TBATS model on Greenline time series
 tbats_model_green <- tbats(greenline_ts)
 
-# Forecast with TBATS
+# Generate 12-month forecast
 tbats_forecast_green <- forecast(tbats_model_green, h = 12)
 
-# Plot TBATS Forecast
+# Plot the TBATS forecast with historical data overlay
 autoplot(tbats_forecast_green) +
   autolayer(greenline_ts, series = "Historical Data", alpha = 0.7) +
   labs(
     title = "TBATS Forecast: Greenline Passengers",
     x = "Year",
-    y = "Passengers",
-    caption = "Source: Luas Data"
+    y = "Passenger Count",
+    caption = "Source: Luas Transport Data"
   ) +
   theme_minimal() +
   theme(
-    plot.title = element_text(hjust = 0.5),
-    axis.text = element_text(size = 12),
-    axis.title = element_text(size = 14)
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    axis.title = element_text(size = 13),
+    axis.text = element_text(size = 11),
+    legend.title = element_blank()
   )
 ```
 
